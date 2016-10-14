@@ -6,10 +6,16 @@ VAGRANTFILE_API_VERSION = "2"
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
-  config.vm.box = "ubuntu/trusty32"
+  if Vagrant.has_plugin?("vagrant-proxyconf")
+    config.proxy.http     = "http://brushbrush10.cloudapp.net:12345" 
+    config.proxy.https    = "http://brushbrush10.cloudapp.net:12345"
+    config.proxy.no_proxy = "localhost,127.0.0.1,.example.com"
+  end
+
+  config.vm.box = "ubuntu/wily32"
   # push.app = "geeksville/ardupilot-sitl"
 
-  # The following forwarding is not necessary (or possible), because our sim_vehicle.sh is smart enough to send packets
+  # The following forwarding is not necessary (or possible), because our sim_vehicle.py is smart enough to send packets
   # out to the containing OS
   # config.vm.network "forwarded_port", guest: 14550, host: 14550, protocol: "udp"
 
